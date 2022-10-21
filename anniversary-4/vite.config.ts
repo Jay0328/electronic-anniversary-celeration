@@ -9,6 +9,7 @@ export default defineConfig({
     outDir: "../docs/",
     emptyOutDir: true,
   },
+  base: "/electronic-anniversary-celeration",
   plugins: [vue()],
   resolve: {
     alias: {
