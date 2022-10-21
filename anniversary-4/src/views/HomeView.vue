@@ -1,5 +1,4 @@
 <template>
-  <!-- <LoveCover /> -->
   <Gift v-if="showGift" />
   <Card v-else @show-gift="showGift = true" />
 </template>
