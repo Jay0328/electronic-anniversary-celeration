@@ -19,30 +19,34 @@
 
 import { ref } from "vue";
 
+export interface GiftEmits {
+  (e: "opened"): void;
+}
+
+const emit = defineEmits<GiftEmits>();
+
 const boxRef = ref<HTMLElement>();
 const step = ref(0);
-const stepTimeouts = [2000, 2000, 1000, 1000];
+const stepTimeouts = [1500, 600];
 
 const goNextStep = () => {
   const prevStep = step.value;
   const nextStep = prevStep + 1;
 
-  step.value = nextStep;
-
-  if (nextStep < 4) {
+  if (nextStep < 3) {
+    step.value = nextStep;
     window.setTimeout(goNextStep, stepTimeouts[prevStep]);
+  } else {
+    emit("opened");
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .giftbox {
-  position: absolute;
+  position: relative;
   width: 300px;
   height: 200px;
-  left: 50%;
-  margin-left: -150px;
-  bottom: 50%;
   z-index: 10;
 
   & > div {
@@ -140,14 +144,6 @@ const goNextStep = () => {
   opacity: 0;
 }
 
-.step-3,
-.step-4 {
-  opacity: 0;
-  z-index: 1;
-  &:after {
-    opacity: 0;
-  }
-}
 .step-2 {
   .cover {
     animation: flyUp 0.4s ease-in forwards;
