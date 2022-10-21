@@ -1,12 +1,12 @@
 <template>
   <div class="scratch">
-    如中獎請找禹杰領獎
+    <h1>禹杰牌刮刮樂</h1>
     <div class="canvas-container">
-      <canvas ref="bgCanvasRef" :width="300" :height="300" />
+      <canvas ref="bgCanvasRef" :width="width" :height="height" />
       <canvas
         ref="fgCanvasRef"
-        :width="300"
-        :height="300"
+        :width="width"
+        :height="height"
         @pointerdown="scratching = true"
         @pointerup="scratching = false"
         @pointermove="onScratch"
@@ -17,6 +17,9 @@
 
 <script lang="ts" setup>
 import { ref, watchEffect } from "vue";
+
+const width = 360;
+const height = 600;
 
 const bgCanvasRef = ref<HTMLCanvasElement>();
 const fgCanvasRef = ref<HTMLCanvasElement>();
@@ -41,8 +44,12 @@ watchEffect(() => {
   if (!canvas) return;
 
   const context = canvas.getContext("2d")!;
-  context.font = "30px Microsoft JhengHei, PMingLiU, sans-serif";
-  context.fillText("恭喜獲得信義區豪宅", 100, 180);
+  context.font = "16px Noto Sans TC";
+  context.fillText("請截圖存證", 150, 320);
+  context.fillText("到禹杰床上領獎", 150, 340);
+  context.fillText("10萬出國爽刷", 20, 20);
+  context.fillText("鳳凰電波無限贊助", 200, 150);
+  context.fillText("下次搬家就養貓貓", 60, 500);
 });
 watchEffect(() => {
   const canvas = fgCanvasRef.value;
@@ -51,17 +58,28 @@ watchEffect(() => {
 
   const context = canvas.getContext("2d")!;
   context.fillStyle = "silver";
-  context.fillRect(0, 0, 450, 380);
+  context.fillRect(0, 0, width, height);
   context.globalCompositeOperation = "destination-out";
 });
 </script>
 
 <style lang="scss" scoped>
 .scratch {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 40px 0;
+  text-align: center;
 }
 
 .canvas-container {
   position: relative;
+  margin: 0 auto;
+  width: 360px;
+  touch-action: none;
 }
 
 canvas {

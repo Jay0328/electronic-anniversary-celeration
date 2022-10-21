@@ -9,7 +9,7 @@
 import { computedAsync } from "@vueuse/core";
 import { type QRCodeRenderersOptions, toDataURL } from "qrcode";
 
-const url = "https://github.com/Jay0328/electronic-anniversary-celeration";
+const url = "https://jay0328.github.io/electronic-anniversary-celeration/";
 const options: QRCodeRenderersOptions = {
   margin: 2,
   scale: 4,

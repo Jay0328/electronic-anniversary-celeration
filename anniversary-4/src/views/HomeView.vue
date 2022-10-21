@@ -13,7 +13,12 @@
     }"
     @opened="onGiftOpened"
   />
-  <Scratch v-else />
+  <Scratch
+    v-else
+    :class="{
+      shown: scratchShown,
+    }"
+  />
 </template>
 
 <script setup lang="ts">
@@ -25,6 +30,7 @@ import Scratch from "../components/Scratch.vue";
 const screen = ref<"card" | "gift" | "scratch">("card");
 const cardHidden = ref(false);
 const giftShown = ref(false);
+const scratchShown = ref(false);
 
 const showGift = () => {
   cardHidden.value = true;
@@ -39,6 +45,9 @@ const showGift = () => {
 
 const onGiftOpened = () => {
   screen.value = "scratch";
+  window.setTimeout(() => {
+    scratchShown.value = true;
+  }, 100);
 };
 </script>
 
@@ -57,6 +66,15 @@ const onGiftOpened = () => {
   &.shown {
     transition: transform 1s ease-in-out;
     transform: translateY(0);
+  }
+}
+
+.scratch {
+  opacity: 0;
+
+  &.shown {
+    transition: transform 1.5s ease-in-out;
+    opacity: 1;
   }
 }
 </style>

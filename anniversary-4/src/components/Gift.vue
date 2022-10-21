@@ -5,7 +5,7 @@
     :class="{
       [`step-${step}`]: step,
     }"
-    @click="goNextStep"
+    @click="onClick"
   >
     <div class="cover">
       <div></div>
@@ -28,6 +28,14 @@ const emit = defineEmits<GiftEmits>();
 const boxRef = ref<HTMLElement>();
 const step = ref(0);
 const stepTimeouts = [1500, 600];
+
+let clicked = false;
+const onClick = () => {
+  if (clicked) return;
+
+  clicked = true;
+  goNextStep();
+};
 
 const goNextStep = () => {
   const prevStep = step.value;
@@ -59,18 +67,7 @@ const goNextStep = () => {
       top: 0;
     }
   }
-  &:after {
-    position: absolute;
-    color: #fff;
-    width: 100%;
-    content: "Click Me!";
-    left: 0;
-    bottom: 0;
-    font-size: 24px;
-    text-align: center;
-    transform: rotate(-20deg);
-    transform-origin: 0 0;
-  }
+
   .cover {
     width: 100%;
     top: 0;
