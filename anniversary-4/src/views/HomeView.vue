@@ -6,13 +6,14 @@
     }"
     @show-gift="showGift"
   />
-  <Gift
-    v-else-if="screen === 'gift'"
-    :class="{
-      shown: giftShown,
-    }"
-    @opened="onGiftOpened"
-  />
+  <div v-else-if="screen === 'gift'" class="gift-container">
+    <Gift
+      :class="{
+        shown: giftShown,
+      }"
+      @opened="onGiftOpened"
+    />
+  </div>
   <Scratch
     v-else
     :class="{
@@ -59,8 +60,13 @@ const onGiftOpened = () => {
   }
 }
 
+.gift-container {
+  height: 100%;
+  padding-top: 600px;
+}
+
 .giftbox {
-  margin: 600px auto 0;
+  margin: 0 auto;
   transform: translateY(200%);
 
   &.shown {

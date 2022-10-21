@@ -2,25 +2,22 @@
   <div class="card" :class="statusClass">
     <div class="content" @click="close">
       <div class="wrap">
-        <p>Hi birthday person,</p>
-        <p>Congratulations with your xxth birthday!</p>
+        <p>嗨~我家的可愛寶貝喵喵</p>
         <p>
-          I hope you'll have a splendid day. Lorem ipsum dolor sit amet
-          consectetur adipiscing elit.
+          不知不覺我們認識超過四年了，也習慣了你每天陪伴在我身邊的日常，有時候我獨自在家的時候總是覺得不太自在，
+          你的存在好像漸漸地變成我這個人的一部份。
         </p>
         <p>
-          Maecenas sed elit id elit molestie fringilla. Vivamus urna elit,
-          bibendum vel congue ullamcorper, interdum ut turpis.
+          就算晚上的時候我們各自做著不同的事，只要有你在我身邊，我就會覺得我的心是平靜的，你對我來說就是有種神秘的喵喵力量。
         </p>
-        <p>
-          Praesent porta magna et scelerisque egestas. Donec ullamcorper dolor
-          vitae tempor volutpat.
-        </p>
-        <p class="signed">Micha&euml;l</p>
-        <button @click.stop="emit('show-gift')">領取禮物</button>
+        <p>最愛你了，以後也會一直愛你</p>
+        <p>希望接下來我們也能一樣快樂</p>
+        <p class="signed">Jay, 2022-10-22</p>
+        <button class="receive-gift" @click.stop="emit('show-gift')">
+          領取禮物
+        </button>
       </div>
     </div>
-
     <div class="cover" @click="open">
       <div class="wrap">
         <LoveCover />
@@ -84,6 +81,7 @@ watch(opened, (_, __, onInvalidate) => {
 .cover,
 .content {
   position: absolute;
+  width: 100%;
   box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
@@ -118,6 +116,9 @@ watch(opened, (_, __, onInvalidate) => {
   }
 
   .content & {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 1.5em 2.5em;
     background: #ffefef;
     box-shadow: inset 2px 0 1px rgba(0, 0, 0, 0.05);
@@ -134,9 +135,32 @@ p {
   &.signed {
     margin-top: 1.5em;
     font-family: "Dancing Script", sans-serif;
-    font-size: 1.5em;
-    text-align: center;
+    font-size: 0.8em;
+    text-align: right;
   }
+}
+
+.receive-gift {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 20px 0;
+  height: 55px;
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  transition: all 0.4s ease-in-out;
+  background-image: linear-gradient(
+    to right,
+    #ed6ea0,
+    #ec8c69,
+    #f7186a,
+    #fbb03b
+  );
+  box-shadow: 0 4px 15px 0 rgb(236 116 149 / 75%);
 }
 
 .card.open-half .cover,
