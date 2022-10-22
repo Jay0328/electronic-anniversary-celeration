@@ -62,12 +62,12 @@ const onGiftOpened = () => {
 
 .gift-container {
   height: 100%;
-  padding-top: 600px;
+  padding-top: 300px;
 }
 
 .giftbox {
   margin: 0 auto;
-  transform: translateY(200%);
+  transform: translateY(100vh);
 
   &.shown {
     transition: transform 1s ease-in-out;
