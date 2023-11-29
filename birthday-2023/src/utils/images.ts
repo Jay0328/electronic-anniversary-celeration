@@ -1,19 +1,19 @@
-import _295483990_421076556736792_2462373687955662683_n from '@/assets/images/295483990_421076556736792_2462373687955662683_n.jpg'
-import _339701144_244034334680163_7903994325469696033_n from '@/assets/images/339701144_244034334680163_7903994325469696033_n.jpg'
-import _328334996_421766223473853_1216311456062318034_n from '@/assets/images/328334996_421766223473853_1216311456062318034_n.jpg'
-import PXL_20201103_120756932 from '@/assets/images/PXL_20201103_120756932.jpg'
-import PXL_20201115_033520510 from '@/assets/images/PXL_20201115_033520510.jpg'
-import PXL_20220815_054850345 from '@/assets/images/PXL_20220815_054850345.jpg'
-import PXL_20231014_192807866 from '@/assets/images/PXL_20231014_192807866.jpg'
-import WPC09681 from '@/assets/images/WPC09681.jpg'
+import image1 from '@/assets/images/image1.jpg'
+import image2 from '@/assets/images/image2.jpg'
+import image3 from '@/assets/images/image3.jpg'
+import image4 from '@/assets/images/image4.jpg'
+import image5 from '@/assets/images/image5.jpg'
+import image6 from '@/assets/images/image6.jpg'
+import image7 from '@/assets/images/image7.jpg'
+import image8 from '@/assets/images/image8.jpg'
 
 export const imageUrls = [
-  _295483990_421076556736792_2462373687955662683_n,
-  _339701144_244034334680163_7903994325469696033_n,
-  _328334996_421766223473853_1216311456062318034_n,
-  PXL_20201103_120756932,
-  PXL_20201115_033520510,
-  PXL_20220815_054850345,
-  PXL_20231014_192807866,
-  WPC09681
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  image6,
+  image7,
+  image8
 ]
