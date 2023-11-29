@@ -34,6 +34,7 @@ defineProps<MemoryCardProps>()
   perspective: 1000px;
   background-color: transparent;
   transition: opacity 0.6s;
+  will-change: opacity;
 
   &.completed {
     opacity: 0;
@@ -46,6 +47,7 @@ defineProps<MemoryCardProps>()
   height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
+  will-change: transform;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
   .flipped &,
@@ -63,7 +65,6 @@ defineProps<MemoryCardProps>()
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: rgb(255, 255, 255);
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden; /* Safari */
   overflow: hidden;
@@ -94,9 +95,10 @@ defineProps<MemoryCardProps>()
   top: -34px;
   left: -1px;
   margin: auto;
-  box-shadow: 0 0 17px 3px rgba(251, 246, 190, 0.71);
   transform-origin: bottom;
   animation: flicker 3s ease-in-out alternate infinite;
+  will-change: transform, box-shadow;
+  box-shadow: 0 0 17px 3px rgba(251, 246, 190, 0.71);
 }
 
 @keyframes flicker {

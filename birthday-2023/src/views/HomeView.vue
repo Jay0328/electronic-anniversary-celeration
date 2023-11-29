@@ -40,6 +40,7 @@ const onIntroEnd = () => {
 
 .card {
   opacity: 0;
+  will-change: transition, opacity;
 
   &.shown {
     opacity: 1;
