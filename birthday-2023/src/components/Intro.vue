@@ -4,7 +4,9 @@
     <div class="from left">涵涵寶寶</div>
     <div class="from right">恭喜你</div>
     <div class="from bottom age-container">
-      <div class="digits one">1</div>
+      <div class="digits one">
+        <div class="one-vertical">1</div>
+      </div>
       <div class="age">
         <div class="tens digits">{{ tensDigits }}</div>
         <div class="digits">{{ unitsDigits }}</div>
@@ -15,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, watchEffect } from 'vue'
 
 export interface IntroEmits {
   (e: 'end'): void
@@ -30,7 +32,8 @@ type Phase =
   | 'one-shown'
   | 'one-walking'
   | 'one-jumping'
-  | 'one-done'
+  | 'one-win'
+  | 'age-shine'
   | 'shaked'
   | 'falling'
 
@@ -39,6 +42,21 @@ const phase = ref<Phase>('idle')
 const age = ref(0)
 const tensDigits = computed(() => Math.floor(age.value / 10))
 const unitsDigits = computed(() => age.value % 10)
+
+const clickTimes = ref(0)
+const onClick = () => {
+  if (phase.value !== 'age-shine') return
+
+  clickTimes.value++
+
+  if (clickTimes.value >= 2) {
+    end()
+  }
+}
+watchEffect((onInvalidate) => {
+  document.addEventListener('pointerdown', onClick)
+  onInvalidate(() => document.removeEventListener('pointerdown', onClick))
+})
 
 const start = () => {
   window.setTimeout(() => {
@@ -64,21 +82,23 @@ const incrementAgeAnimation = () => {
 }
 
 const oneStart = () => {
+  window.setTimeout(oneShow, 250)
+}
+
+const oneShow = () => {
+  phase.value = 'one-idle'
   window.setTimeout(() => {
-    phase.value = 'one-idle'
+    phase.value = 'one-shown'
     window.setTimeout(() => {
-      phase.value = 'one-shown'
-      window.setTimeout(() => {
-        phase.value = 'one-idle'
-        window.setTimeout(oneWalk, 250)
-      }, 1000)
-    }, 400)
-  }, 250)
+      phase.value = 'one-idle'
+      window.setTimeout(oneWalk, 250)
+    }, 1000)
+  }, 400)
 }
 
 const oneWalk = () => {
   phase.value = 'one-walking'
-  window.setTimeout(oneJump, 1500)
+  window.setTimeout(oneJump, 2000)
 }
 
 const oneJump = () => {
@@ -87,8 +107,10 @@ const oneJump = () => {
     age.value = 18
     nextTick(() => {
       window.setTimeout(() => {
-        phase.value = 'one-done'
-        window.setTimeout(end, 400)
+        phase.value = 'one-win'
+        window.setTimeout(() => {
+          phase.value = 'age-shine'
+        }, 1000)
       }, 200)
     })
   }, 3200)
@@ -114,6 +136,7 @@ onMounted(start)
   gap: 8px;
   font-size: 36px;
   text-align: center;
+  will-change: transform;
 
   &.falling {
     animation: falling 1.5s;
@@ -138,6 +161,7 @@ onMounted(start)
 .from {
   transition: transform 0.3s;
   transform: translateY(0);
+  will-change: transform;
 
   &.top {
     .idle & {
@@ -195,6 +219,13 @@ onMounted(start)
 .digits {
   font-size: 108px;
   line-height: 1em;
+  will-change: text-shadow, transform;
+
+  .age-shine &,
+  .shaked &,
+  .falling & {
+    animation: shine 0.8s ease-in-out infinite alternate;
+  }
 }
 
 .one {
@@ -203,7 +234,7 @@ onMounted(start)
   transition:
     height 0.3s,
     transform 0.3s;
-  overflow: hidden;
+  will-change: height, transform;
 
   .idle &,
   .enter & {
@@ -226,14 +257,27 @@ onMounted(start)
 
   .one-walking & {
     transform: translateX(0);
-    transition: transform 1.5s ease-in-out;
+    transition: transform 1.8s ease-in-out;
   }
 
-  .one-done &,
+  .one-win &,
+  .age-shine &,
   .shaked &,
   .falling & {
     visibility: hidden;
     height: 0;
+  }
+}
+
+.one-vertical {
+  .one-walking & {
+    animation:
+      one-walking-1 0.3s 1 0s cubic-bezier(0, 0, 0.3642, 1),
+      one-walking-2 0.3s 1 0.3s cubic-bezier(0.6358, 0, 1, 1),
+      one-walking-1 0.3s 1 0.6s cubic-bezier(0, 0, 0.3642, 1),
+      one-walking-2 0.3s 1 0.9s cubic-bezier(0.6358, 0, 1, 1),
+      one-walking-1 0.3s 1 1.2s cubic-bezier(0, 0, 0.3642, 1),
+      one-walking-2 0.3s 1 1.5s cubic-bezier(0.6358, 0, 1, 1);
   }
 }
 
@@ -265,6 +309,24 @@ onMounted(start)
       tens-jumping-1 0.3s 1 1.8s cubic-bezier(0, 0, 0.3642, 1),
       tens-jumping-2 0.3s 1 2.1s cubic-bezier(0.6358, 0, 1, 1),
       tens-jumping-end 0.1s 1 3s ease forwards;
+  }
+}
+
+@keyframes one-walking-1 {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes one-walking-2 {
+  0% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 
@@ -341,6 +403,30 @@ onMounted(start)
 
   100% {
     transform: scaleY(0);
+  }
+}
+
+@keyframes shine {
+  0% {
+    text-shadow:
+      0 0 10px #fff,
+      0 0 20px #fff,
+      0 0 30px #e60073,
+      0 0 40px #e60073,
+      0 0 50px #e60073,
+      0 0 60px #e60073,
+      0 0 70px #e60073;
+  }
+
+  100% {
+    text-shadow:
+      0 0 20px #fff,
+      0 0 30px #ff4da6,
+      0 0 40px #ff4da6,
+      0 0 50px #ff4da6,
+      0 0 60px #ff4da6,
+      0 0 70px #ff4da6,
+      0 0 80px #ff4da6;
   }
 }
 
