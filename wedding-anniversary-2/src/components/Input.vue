@@ -7,7 +7,6 @@
     }"
     autocomplete="off"
     placeholder=""
-    :type="type"
   />
 </template>
 
@@ -16,7 +15,6 @@ import { computed } from "vue";
 
 export interface InputProps {
   modelValue?: string | null;
-  type?: string;
   error?: boolean;
 }
 

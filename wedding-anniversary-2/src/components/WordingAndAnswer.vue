@@ -1,24 +1,23 @@
 <template>
-  <div class="container">
+  <WordingContainer>
     <TyperWording :configs="wordingConfigs" @completed="onWordingCompleted" />
     <Input
       v-if="wordingCompleted"
       v-model="answer"
-      :type="inputType"
       :error="error"
       @keydown.enter="checkAnswer"
     />
-  </div>
+  </WordingContainer>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import Input from "@/components/Input.vue";
+import WordingContainer from "./WordingContainer.vue";
 import TyperWording from "./TyperWording.vue";
+import Input from "./Input.vue";
 
 interface Props {
   wordingConfigs: (string | number)[][];
-  inputType: string;
   isValidAnswer: (value: string) => boolean;
 }
 
@@ -45,13 +44,3 @@ const checkAnswer = () => {
   }
 };
 </script>
-
-<style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 2rem;
-}
-</style>

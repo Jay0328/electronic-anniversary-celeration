@@ -1,7 +1,6 @@
 <template>
   <WordingAndAnswer
     :wordingConfigs="wordingConfigs"
-    input-type="text"
     :is-valid-answer="isValidAnswer"
   />
 </template>
@@ -33,10 +32,10 @@ const wordingConfigs = [
   ["即將啟動重建程序：", 400, "《編號 002》", 800],
   ["請輸入", 200, "主體完整編碼", 200, "以嘗試恢復連線"],
 ];
-const isValidAnswer = (value: string) => false;
-// value.length === 10 &&
-// value.startsWith("O") &&
-// value.substring(1, 4) === "200" &&
-// value.substring(4, 7) === "384" &&
-// value.substring(7, 10) === "043";
+const isValidAnswer = (value: string) =>
+  value.length === 10 &&
+  value.startsWith("O") &&
+  value.substring(1, 4) === "200" &&
+  value.substring(4, 7) === "384" &&
+  value.substring(7, 10) === "043";
 </script>
